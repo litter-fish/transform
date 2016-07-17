@@ -1,0 +1,6 @@
+[transform] 2016-07-17 13:03:10,828 [ERROR] [com.fish.factory.fileparser.WordFactory.convert2Html(WordFactory.java:74)] : file format error
+[transform] 2016-07-17 13:04:32,685 [ERROR] [com.fish.factory.fileparser.WordFactory.convert2Html(WordFactory.java:74)] : file format error
+[transform] 2016-07-17 13:05:44,735 [ERROR] [com.fish.factory.fileparser.WordFactory.convert2Html(WordFactory.java:74)] : file format error
+[transform] 2016-07-17 13:07:44,968 [ERROR] [com.fish.factory.fileparser.WordFactory.convert2Html(WordFactory.java:74)] : file format error
+[transform] 2016-07-17 13:19:24,893 [ERROR] [com.fish.factory.fileparser.WordFactory.convert2Html(WordFactory.java:74)] : file format error
+[transform] 2016-07-17 13:22:03,383 [ERROR] [com.fish.factory.fileparser.WordFactory.convert2Html(WordFactory.java:74)] : file format error
