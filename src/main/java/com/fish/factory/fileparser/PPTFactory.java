@@ -55,7 +55,7 @@ public class PPTFactory implements AbstractFactory {
 			try { if(null != is) { is.close(); } } finally { }
 		}
 		FileHelper.writeHtmlFile(size, outputFile, baseName);
-		FileHelper.parseCharset(outputFile + ".html");
+		FileHelper.parseH2(outputFile + ".html");
 		//convert2Png(inputFile, outputFile);
 		log.info("将PPT或PPTX转换为html文件......ok");
 		log.info("Generate " + outputFile + ".html with " + (System.currentTimeMillis() - startTime) + " ms.");
@@ -257,9 +257,8 @@ public class PPTFactory implements AbstractFactory {
 
 	@Override
 	public void convert2Text(String fileName, String outPutFile) throws Exception {
-		// TODO Auto-generated method stub
-		
-			
+		String content = RTFFactory.parse(fileName);
+		FileHelper.writeFile(content, outPutFile + ".txt");	
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import com.fish.factory.fileparser.AbstractFactory;
 import com.fish.factory.fileparser.ExcelFactory;
 import com.fish.factory.fileparser.PPTFactory;
 import com.fish.factory.fileparser.PdfFactory;
+import com.fish.factory.fileparser.RTFFactory;
 import com.fish.factory.fileparser.TextFactory;
 import com.fish.factory.fileparser.WordFactory;
 
@@ -22,6 +23,7 @@ public class ConverFile {
 	private final static String[] POWERPOINT_FORMAT = {"PPT", "ppt", "PPTX", "pptx", "DPS", "dps"};
 	private final static String[] PDF_FORMAT = {"PDF", "pdf"};
 	private final static String[] TXT_FORMAT = {"TXT", "txt"};
+	private final static String[] RTF_FORMAT = {"RTF", "rtf"};
 	
 	public static final String converFile2Html(String baseOutPutFilePath, String fileUrls) throws Exception {
 		
@@ -52,6 +54,10 @@ public class ConverFile {
 			FileHelper.mkdirFiles(baseOutPutFilePath, "txt" + File.separatorChar + baseName);
 			outPutFile = baseOutPutFilePath + "txt" + File.separatorChar + baseName + File.separatorChar + baseName;
 			abstractFactory = new TextFactory(); // 创建text解析工厂
+		} else if (Arrays.asList(RTF_FORMAT).contains(extension)) {
+			FileHelper.mkdirFiles(baseOutPutFilePath, "rtf" + File.separatorChar + baseName);
+			outPutFile = baseOutPutFilePath + "rtf" + File.separatorChar + baseName + File.separatorChar + baseName;
+			abstractFactory = new RTFFactory(); // 创建text解析工厂
 		} else {
 			log.info("文件解析工厂未创建");
 			return null;

@@ -71,7 +71,8 @@ public class WordFactory implements AbstractFactory {
 			} else if(FileHelper.isWord2007(input)) {
 				convertDocx2Html(is, outputFile);
 			} else {
-				log.error("file format error");
+				RTFFactory.parseToHTML(inputFile, outputFile);
+				//log.error("file format error");
 			}
 		} finally {
 			try {
@@ -228,8 +229,8 @@ public class WordFactory implements AbstractFactory {
 
 	@Override
 	public void convert2Text(String fileName, String outPutFile) throws Exception {
-		// TODO Auto-generated method stub
-			
+		String content = RTFFactory.parse(fileName);
+		FileHelper.writeFile(content, outPutFile + ".txt");
 	}
 	
 	public void doc2pdf(String docFileName) throws Exception{
@@ -239,8 +240,8 @@ public class WordFactory implements AbstractFactory {
 		WordFactory wordFactory = new WordFactory();
 		
 		try {
-			//wordFactory.convert2Html("D:\\home\\RmadFile\\dps.wps", "D:\\home\\RmadFile\\wps");
-			wordFactory.convert2Html("D:\\home\\RmadFile\\1467965541140.doc", "D:\\home\\RmadFile\\1467965541140");
+			//wordFactory.convert2Html("D:\\home\\RmadFile\\doc.doc", "D:\\home\\RmadFile\\doc");
+			wordFactory.convert2Text("D:\\home\\RmadFile\\docx.docx", "D:\\home\\RmadFile\\docx");
 		} catch (TransformerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

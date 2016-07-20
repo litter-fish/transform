@@ -6,11 +6,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.util.Iterator;
+
+import javax.ws.rs.core.NewCookie;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.hslf.usermodel.HSLFSlideShow;
@@ -298,10 +303,45 @@ public class FileHelper {
 	}
 	
 	/**
+	 * 删除文件空行
+	 * @param content
+	 * @param outPutFile
+	 * @throws IOException
+	 */
+	public static void rmrBlankLines(String inputFile, String outPutFile) throws IOException {
+		File htmFile = new File(inputFile);
+		// 以GB2312读取文件
+		BufferedReader br = null;
+		BufferedWriter bw = null;
+		try {
+			br = new BufferedReader(new FileReader(htmFile));
+			bw = new BufferedWriter(new FileWriter(new File(outPutFile)));
+			String result = null;
+			while(null != (result = br.readLine()) ) {
+				if(!"".equals(result.trim()))
+					bw.write(result + "\r\n");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(null != br)
+					br.close();
+				if(null != bw)
+					bw.close();
+			} catch (Exception e) {
+				
+			}
+		}
+		
+		
+	}
+	
+	/**
 	 * @param htmFilePath
 	 * @throws IOException
 	 */
-	public static void parseCharset(String htmFilePath) throws IOException{
+	public static void parseH2(String htmFilePath) throws IOException{
 		File htmFile = new File(htmFilePath);
 		 Document doc = Jsoup.parse(htmFile, "UTF-8");
 		 doc.getElementsByAttribute("h2");
@@ -312,8 +352,96 @@ public class FileHelper {
          FileUtils.writeStringToFile(htmFile, doc.html(),"UTF-8");
 	}
 	
+	/**
+	 * @param htmFilePath
+	 * @throws IOException
+	 */
+	public static void parseCharset(String htmFilePath) throws IOException{
+		File htmFile = new File(htmFilePath);
+		//以GB2312读取文件
+		 Document doc = Jsoup.parse(htmFile, "utf-8");
+		 //获取html节点
+         Elements content = doc.getElementsByAttributeValueStarting("content", "text/html;");
+         for (Element meta : content) {
+        	 //获取content节点，修改charset属性
+             meta.attr("content", "text/html; charset=utf-8");
+             break;
+         }
+         //转换成utf-8编码的文件写入
+         System.out.println(doc.html());
+         FileUtils.writeStringToFile(htmFile, doc.html(),"utf-8");
+	}
+	
+	/**
+	 * @param htmFilePath
+	 * @throws IOException
+	 */
+	public static void parse(String htmFilePath) throws IOException{
+		File htmFile = new File(htmFilePath);
+		//以GB2312读取文件
+		 Document doc = Jsoup.parse(htmFile, "utf-8");
+		 String xmlns = doc.getElementsByTag("html").attr("xmlns");
+		 if(null == xmlns || "".equals(xmlns)) {
+			 return;
+		 }
+		 doc.getElementsByTag("html").removeAttr("xmlns");
+		 Element head = doc.head();
+		 /*Elements headChildren = head.children();
+		 for(Element children : headChildren) {
+			 Elements metas = children.getElementsByTag("meta");
+			 for(Element meta : metas) {
+				 meta.remove();
+			 }
+		 }*/
+		 head.appendElement("meta").attr("name", "viewport").attr("content", "width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no");
+		
+		 //获取html节点
+		 Element element = doc.body();
+         Elements content = head.getElementsByAttributeValueStarting("name", "meta:page-count");
+         for (Element meta : content) {
+        	 
+        	 String value = meta.attr("content");
+        	 try {
+        		 Integer count = Integer.valueOf(value);
+        		 Elements ps = element.getElementsByTag("p");
+        		 Iterator<Element> iterator = ps.iterator();
+        		 while (iterator.hasNext()) {
+        			 Element p = iterator.next();
+        			 String text = p.text();
+             		if(text.equals("- " + count +" -")) {
+             			for(int offset = count; offset > 0; offset--) {
+             				p.remove();
+             				p = iterator.next();
+             				text = p.text();
+             			}
+             		}
+             		if(text.equals("")) {
+            			p.remove();
+            			p = iterator.next();
+            		}
+             		p.attr("align", "center");
+             		p.attr("style", "font-size:1.5rem;");
+             		break;
+				}
+        	 } catch(Exception e) {
+        		 
+        	 }
+        	 //获取content节点，修改charset属性
+        	 //meta.attr("content", "text/html; charset=utf-8");
+             break;
+         }
+         //转换成utf-8编码的文件写入
+         FileUtils.writeStringToFile(htmFile, "<!DOCTYPE html>" + doc.html(),"utf-8");
+	}
+	
 	public static void main(String[] args) throws FileNotFoundException {
-		//System.out.println(FileHelper.isWord2003(new FileInputStream(new File("D:\\home\\1453388194953.DOC"))));
+		try {
+			//parse("D:/home/RmadFile/html/2016/07/19/word/2/2.html");
+			rmrBlankLines("D:\\home\\RmadFile\\docx.txt", "D:\\home\\RmadFile\\docx2.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -122,12 +122,12 @@ public class ExcelFactory implements AbstractFactory {
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer serializer = tf.newTransformer();
             // TODO set encoding from a command argument
-            serializer.setOutputProperty( OutputKeys.ENCODING, "UTF-8" ); 			// 文件编码方式
+            serializer.setOutputProperty( OutputKeys.ENCODING, "GB2312" ); 			// 文件编码方式
             serializer.setOutputProperty( OutputKeys.INDENT, "no" ); 				// indent 指定了当输出结果树时，Transformer 是否可以添加额外的空白；其值必须为 yes 或 no
             serializer.setOutputProperty( OutputKeys.METHOD, "html" );				// 指定输出文件的后缀名
             serializer.transform(domSource, streamResult);
             
-            FileHelper.parseCharset(outPutFile + ".html");
+           // FileHelper.parseCharset(outPutFile + ".html");
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
@@ -143,7 +143,9 @@ public class ExcelFactory implements AbstractFactory {
 
 	@Override
 	public void convert2Text(String fileName, String outPutFile) throws Exception {
-		// TODO Auto-generated method stub
+		String content = RTFFactory.parse(fileName);
+		FileHelper.writeFile(content, outPutFile + ".txt");
+		
 	}
 	
 	public static void main(String[] args) {

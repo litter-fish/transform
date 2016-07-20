@@ -8,6 +8,7 @@ public class TextFactory implements AbstractFactory {
 	public void convert2Html(String fileName, String outPutFile) throws Exception {
 		StringBuffer buffer = FileHelper.readFile(fileName, "<br />");
 		FileHelper.write2Html(buffer, outPutFile);
+		FileHelper.parseH2(outPutFile);
 	}
 
 	@Override
@@ -17,6 +18,8 @@ public class TextFactory implements AbstractFactory {
 
 	@Override
 	public void convert2Text(String fileName, String outPutFile) throws Exception {
+		String content = RTFFactory.parse(fileName);
+		FileHelper.writeFile(content, outPutFile + ".txt");
 	}
 
 	@Override
