@@ -25,7 +25,7 @@ public class RTFFactory implements AbstractFactory {
 	public static void main(String[] args) throws IOException, SAXException, TikaException {
 		//System.out.println(parseToHTML());
 		
-		System.out.println(parse("D://home/RmadFile//20160628000001_001_lianxi.txt"));
+		System.out.println(parse("D://home/RmadFile//tran//csvtest.csv"));
 		//System.out.println( fileToTxt(new File("D://home/RmadFile//20160628000001_001_lianxi.txt")) );
 	}
 	
