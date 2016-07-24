@@ -1,24 +1,11 @@
-package com.fish.factory.utils;
+package com.fish.fileparser.utils;
 
-import com.fish.factory.fileparser.AbstractFactory;
+import com.fish.fileparser.factory.AbstractFactory;
 
-/**
- * 
- * ������:
- *       �ļ�ת������
- * @see	��Ҫ�μ�������ࣨ��ѡ��
- * @version 1.0 
- * @date 2016��3��4��
- * @author <a href="mailto:Ydm@nationsky.com">Ydm</a>
- * @since JDK 1.7
- */
 public class ConvertEngineer {
 	
 	private String fileName;
-	
 	private String outPutFile;
-	
-	public ConvertEngineer() {}
 	
 	public ConvertEngineer(String fileName, String outPutFile) {
 		this.fileName = fileName;
@@ -27,5 +14,8 @@ public class ConvertEngineer {
 	
 	public void convert(AbstractFactory abstractFactory) throws Exception {
 		abstractFactory.convert2Html(fileName, outPutFile);
+		abstractFactory.convert2Text(fileName, outPutFile);
+		abstractFactory.convert2Pdf(fileName, outPutFile);
+		abstractFactory.convert2Png(fileName, outPutFile);
 	}
 }

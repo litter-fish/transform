@@ -1,4 +1,4 @@
-package com.fish.factory.fileparser;
+package com.fish.fileparser.factory;
 /**
  * 
  * 类描述:
@@ -34,6 +34,6 @@ public interface AbstractFactory {
 	 */
 	public void convert2Text(String fileName, String outPutFile) throws Exception;
 	
-	public boolean covert2Pdf(String fileName, String outPutFile) throws Exception;
+	public boolean convert2Pdf(String fileName, String outPutFile) throws Exception;
 	
 }

@@ -2,8 +2,8 @@ package com.fish.factory.fileparser;
 
 import java.io.File;
 
-import com.fish.factory.utils.ConverFile;
-import com.fish.factory.utils.DateUtil;
+import com.fish.fileparser.utils.ConverFile;
+import com.fish.fileparser.utils.DateUtil;
 
 public class Test {
 
@@ -21,7 +21,7 @@ public class Test {
 						File.separator + DateUtil.getDD() + File.separator;
 				
 				try {
-					outPutFile = ConverFile.converFile2Html(baseOutPutFilePath, fileUrls);
+					outPutFile = ConverFile.converFile(baseOutPutFilePath, fileUrls);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

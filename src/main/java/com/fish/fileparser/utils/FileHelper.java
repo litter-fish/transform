@@ -1,4 +1,4 @@
-package com.fish.factory.utils;
+package com.fish.fileparser.utils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -25,6 +25,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.tika.Tika;
+import org.apache.tika.exception.TikaException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -433,6 +435,7 @@ public class FileHelper {
          //转换成utf-8编码的文件写入
          FileUtils.writeStringToFile(htmFile, "<!DOCTYPE html>" + doc.html(),"utf-8");
 	}
+	
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		try {

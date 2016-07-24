@@ -1,4 +1,4 @@
-package com.fish.factory.utils;
+package com.fish.fileparser.utils;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

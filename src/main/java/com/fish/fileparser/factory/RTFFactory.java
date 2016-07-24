@@ -1,112 +1,59 @@
-package com.fish.factory.fileparser;
+package com.fish.fileparser.factory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import org.apache.log4j.Logger;
 
-import org.apache.tika.Tika;
-import org.apache.tika.exception.TikaException;
-import org.apache.tika.metadata.Metadata;
-import org.apache.tika.parser.AutoDetectParser;
-import org.apache.tika.parser.ParseContext;
-import org.apache.tika.parser.Parser;
-import org.apache.tika.sax.BodyContentHandler;
-import org.apache.tika.sax.ToHTMLContentHandler;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-
-import com.fish.factory.utils.FileHelper;
+import com.fish.fileparser.product.html.AbstractHtml;
+import com.fish.fileparser.product.html.RTFHtml;
+import com.fish.fileparser.product.pdf.AbstractPdf;
+import com.fish.fileparser.product.pdf.RTFPdf;
+import com.fish.fileparser.product.png.AbstractPng;
+import com.fish.fileparser.product.png.RTFPng;
+import com.fish.fileparser.product.txt.AbstractText;
+import com.fish.fileparser.product.txt.RTFText;
 
 public class RTFFactory implements AbstractFactory {
+	
+	private final static Logger log = Logger.getLogger(RTFFactory.class);
 
-	
-	public static void main(String[] args) throws IOException, SAXException, TikaException {
-		//System.out.println(parseToHTML());
-		
-		System.out.println(parse("D://home/RmadFile//tran//csvtest.csv"));
-		//System.out.println( fileToTxt(new File("D://home/RmadFile//20160628000001_001_lianxi.txt")) );
-	}
-	
-
-	/**
-	 * 解析各种类型文件
-	 * 
-	 * @param 文件路径
-	 * @return 文件内容字符串
-	 * @throws TikaException 
-	 * @throws IOException 
-	 */
-	public static String parse(String path) throws IOException, TikaException {
-		Tika tika = new Tika();
-		return tika.parseToString(new File(path));
-	}
-	
-	public static String parseToHTML(String fileName, String outPutFile) throws IOException, SAXException, TikaException {
-	    ContentHandler handler = new ToHTMLContentHandler();
-	    
-	    AutoDetectParser parser = new AutoDetectParser();
-	    Metadata metadata = new Metadata();
-	    InputStream stream = null;
-	    try {
-	    	stream = new FileInputStream(new File(fileName));
-	        parser.parse(stream, handler, metadata);
-	        
-	        FileHelper.writeFile(handler.toString(), outPutFile + ".html");
-	        
-	        FileHelper.parse(outPutFile + ".html");
-	        return null;
-	    } catch(Exception e) {
-	    	e.printStackTrace();
-	    } finally {
-	      
-	    }
-	    
-	    return null;
-	}
-	
-	public static String fileToTxt(File file) {
-        org.apache.tika.parser.Parser parser = new AutoDetectParser();
-        try {
-            InputStream inputStream = new FileInputStream(file);
-            DefaultHandler handler = new BodyContentHandler();
-            Metadata metadata = new Metadata();
-            ParseContext parseContext = new ParseContext();
-            parseContext.set(Parser.class, parser);
-            parser.parse(inputStream,handler,metadata,parseContext);
-            /*for (String string : metadata.names()) {
-                System.out.println(string+":"+metadata.get(string));
-            }*/
-            inputStream.close();
-            return handler.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-	
-	
 	@Override
 	public void convert2Html(String fileName, String outPutFile) throws Exception {
-		parseToHTML(fileName, outPutFile);
+		log.info("start convert RTF to html,out file [" + outPutFile + ".html]......");
+		long startTime = System.currentTimeMillis();
+		AbstractHtml html = new RTFHtml();
+		html.createHtml(fileName, outPutFile);
+		log.info("将RTF转换为html文件......ok");
+		log.info("convert success! Generate " + outPutFile + " with " + (System.currentTimeMillis() - startTime) + " ms.");
 	}
 
 
 	@Override
 	public void convert2Png(String fileName, String outPutFile) throws Exception {
+		log.info("start convert RTF to png,out file [" + outPutFile + ".html]......");
+		long startTime = System.currentTimeMillis();
+		AbstractPng png = new RTFPng();
+		png.createPng(fileName, outPutFile);
+		log.info("将RTF转换为png文件......ok");
+		log.info("convert success! Generate " + outPutFile + " with " + (System.currentTimeMillis() - startTime) + " ms.");
 	}
-
 
 	@Override
 	public void convert2Text(String fileName, String outPutFile) throws Exception {
-		String content = parse(fileName);
-		FileHelper.writeFile(content, outPutFile + ".txt");
+		log.info("start convert RTF to txt,out file [" + outPutFile + ".html]......");
+		long startTime = System.currentTimeMillis();
+		AbstractText text = new RTFText();
+		text.createTxt(fileName, outPutFile);
+		log.info("将RTF转换为txt文件......ok");
+		log.info("convert success! Generate " + outPutFile + ".txt with " + (System.currentTimeMillis() - startTime) + " ms.");
 	}
 
-
 	@Override
-	public boolean covert2Pdf(String fileName, String outPutFile) throws Exception {
+	public boolean convert2Pdf(String fileName, String outPutFile) throws Exception {
+		log.info("start convert RTF to pdf,out file [" + outPutFile + ".html]......");
+		long startTime = System.currentTimeMillis();
+		AbstractPdf html = new RTFPdf();
+		html.createPdf(fileName, outPutFile);
+		log.info("将RTF转换为pdf文件......ok");
+		log.info("convert success! Generate " + outPutFile + ".pdf with " + (System.currentTimeMillis() - startTime) + " ms.");
 		return false;
 	}
 	

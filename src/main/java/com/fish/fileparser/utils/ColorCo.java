@@ -1,4 +1,4 @@
-package com.fish.factory.utils;
+package com.fish.fileparser.utils;
 
 import java.util.HashMap;
 import java.util.Map;

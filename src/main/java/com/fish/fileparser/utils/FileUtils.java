@@ -1,4 +1,4 @@
-package com.fish.factory.utils;
+package com.fish.fileparser.utils;
 
 import java.io.BufferedInputStream;
 import java.io.File;

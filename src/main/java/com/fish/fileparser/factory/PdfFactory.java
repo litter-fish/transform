@@ -1,14 +1,15 @@
-package com.fish.factory.fileparser;
+package com.fish.fileparser.factory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-
-import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 
-import com.fish.factory.utils.FileHelper;
-import com.fish.factory.utils.Pdf2ImageUtils;
+import com.fish.fileparser.product.html.AbstractHtml;
+import com.fish.fileparser.product.html.PdfHtml;
+import com.fish.fileparser.product.pdf.AbstractPdf;
+import com.fish.fileparser.product.pdf.PdfPdf;
+import com.fish.fileparser.product.png.AbstractPng;
+import com.fish.fileparser.product.png.PdfPng;
+import com.fish.fileparser.product.txt.AbstractText;
+import com.fish.fileparser.product.txt.PdfText;
 
 /**
  * 
@@ -33,69 +34,40 @@ public class PdfFactory implements AbstractFactory {
 	public void convert2Html(String fileName, String outPutFile) throws Exception {
 		long startTime = System.currentTimeMillis();
 		log.info("start convert pdf to Html,out file [" + outPutFile + ".html]......");
-		String baseName = FilenameUtils.getBaseName(fileName);
-		int size = Pdf2ImageUtils.convertPdf2Png(fileName, outPutFile);
-		FileHelper.writeHtmlFile(size, outPutFile, baseName);
+		AbstractHtml html = new PdfHtml();
+		html.createHtml(fileName, outPutFile);
 		log.info("convert success! Generate " + outPutFile + ".html with " + (System.currentTimeMillis() - startTime) + " ms.");
 	}
 
 	@Override
-	public void convert2Png(String fileName, String outPutFile) {
-		// TODO Auto-generated method stub
+	public void convert2Png(String fileName, String outPutFile) throws Exception {
+		log.info("start convert pdf to png,out file [" + outPutFile + ".html]......");
+		long startTime = System.currentTimeMillis();
+		AbstractPng png = new PdfPng();
+		png.createPng(fileName, outPutFile);
+		log.info("将Pdf转换为png文件......ok");
+		log.info("convert success! Generate " + outPutFile + " with " + (System.currentTimeMillis() - startTime) + " ms.");
 	}
 
 	@Override
 	public void convert2Text(String fileName, String outPutFile) throws Exception {
-		PdfFactory.convertPdf2Text(fileName, outPutFile);
-	}
-
-	
-
-	/**
-	 * 将pdf文件转换为txt @param fileName @param outPutFile @see @since 1.7 @exception
-	 */
-	private static void convertPdf2Text(String fileName, String outPutFile) {
-		File file = new File(fileName);
-		FileInputStream in = null;
-		try {
-			/*in = new FileInputStream(fileName);
-			// 新建一个PDF解析器对象
-			PDFParser parser = new PDFParser(in);
-			// 对PDF文件进行解析
-			parser.parse();
-			// 获取解析后得到的PDF文档对象
-			PDDocument pdfdocument = parser.getPDDocument();
-			// 新建一个PDF文本剥离器
-			PDFTextStripper stripper = new PDFTextStripper();
-			// 从PDF文档对象中剥离文本
-			String result = stripper.getText(pdfdocument);
-			System.out.println("PDF文件" + file.getAbsolutePath() + "的文本内容如下：");
-			System.out.println(result);*/
-
-		} catch (Exception e) {
-			System.out.println("读取PDF文件" + file.getAbsolutePath() + "生失败！" + e);
-			e.printStackTrace();
-		} finally {
-			if (in != null) {
-				try {
-					in.close();
-				} catch (IOException e1) {
-				}
-			}
-		}
+		log.info("start convert pdf to txt,out file [" + outPutFile + ".html]......");
+		long startTime = System.currentTimeMillis();
+		AbstractText text = new PdfText();
+		text.createTxt(fileName, outPutFile);
+		log.info("将Pdf转换为txt文件......ok");
+		log.info("convert success! Generate " + outPutFile + ".txt with " + (System.currentTimeMillis() - startTime) + " ms.");
 	}
 
 	@Override
-	public boolean covert2Pdf(String fileName, String outPutFile) throws Exception {
-		// TODO Auto-generated method stub
+	public boolean convert2Pdf(String fileName, String outPutFile) throws Exception {
+		log.info("start convert pdf to pdf,out file [" + outPutFile + ".html]......");
+		long startTime = System.currentTimeMillis();
+		AbstractPdf html = new PdfPdf();
+		html.createPdf(fileName, outPutFile);
+		log.info("将Pdf转换为pdf文件......ok");
+		log.info("convert success! Generate " + outPutFile + ".pdf with " + (System.currentTimeMillis() - startTime) + " ms.");
 		return false;
-	}
-	
-	public static void main(String[] args) throws Exception {
-		PdfFactory pdfFactory = new PdfFactory();
-		
-		pdfFactory.convert2Html("D://home/RmadFile/588.pdf", "D://home/RmadFile/588");
-		
 	}
 
 }
