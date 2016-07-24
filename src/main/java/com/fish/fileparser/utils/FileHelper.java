@@ -280,6 +280,29 @@ public class FileHelper {
 		writeFile(buffer.toString(), path + ".html");
 	}
 	
+	public static void writeHtmlFile(String path, String fileName) {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("<!DOCTYPE html><html><head>");
+		buffer.append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>");
+		buffer.append("<meta name=\"viewport\" content=\"width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui\"/>");
+		buffer.append("<meta name=\"format-detection\" content=\"telephone=no\"/>");
+		buffer.append("<meta http-equiv=\"Access-Control-Allow-Origin\" content=\"*\"/>");
+		buffer.append("<title>touch</title>");
+		buffer.append("<meta name=\"keywords\" content=\"\"/>");
+		buffer.append("<meta name=\"description\" content=\"\"/>");
+		buffer.append("<style type=\"text/css\">body{width:100%;height:auto;position:relative;}img{max-width:100%;height:auto;margin:0 auto;}</style>");
+		
+		buffer.append("</head>");
+		buffer.append("<body>");
+		
+		buffer.append("<img src=\"" + fileName + "/" + fileName + ".png\" />");
+		buffer.append("<br />");
+		
+		buffer.append("</body></html>");
+		//System.out.println(buffer.toString());
+		writeFile(buffer.toString(), path + ".html");
+	}
+	
 	public static void write2Html(StringBuffer content, String path) {
 		
 		StringBuffer buffer = new StringBuffer();
