@@ -1,12 +1,12 @@
 package com.fish.fileparser.product.pdf;
 
+import com.fish.fileparser.utils.FileHelper;
+
 public class PdfPdf implements AbstractPdf {
 
 	@Override
 	public void createPdf(String inputFile, String outputFile) throws Exception {
-		// TODO Auto-generated method stub
-		
-			
+		FileHelper.copyFile(inputFile, outputFile, true);
 	}
 
 }
