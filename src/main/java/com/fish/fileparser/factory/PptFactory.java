@@ -1,71 +1,63 @@
 package com.fish.fileparser.factory;
 
-import com.fish.fileparser.product.html.AbstractHtml;
-import com.fish.fileparser.product.html.WordHtml;
-import com.fish.fileparser.product.pdf.AbstractPdf;
-import com.fish.fileparser.product.pdf.WordPdf;
-import com.fish.fileparser.product.png.AbstractPng;
-import com.fish.fileparser.product.png.WordPng;
-import com.fish.fileparser.product.txt.AbstractText;
-import com.fish.fileparser.product.txt.WordText;
-
 import org.apache.log4j.Logger;
 
-public class WordFactory implements AbstractFactory {
+import com.fish.fileparser.product.html.AbstractHtml;
+import com.fish.fileparser.product.html.PptHtml;
+import com.fish.fileparser.product.pdf.AbstractPdf;
+import com.fish.fileparser.product.pdf.PptPdf;
+import com.fish.fileparser.product.png.AbstractPng;
+import com.fish.fileparser.product.png.PptPng;
+import com.fish.fileparser.product.txt.AbstractText;
+import com.fish.fileparser.product.txt.PptText;
 
-  private static final Logger log = Logger.getLogger(WordFactory.class);
+public class PptFactory implements AbstractFactory {
 
-  /**
-   * 将word转换为html
-   * 
-   * @param inputFile 需要转换的word文档
-   * @param outputFile 转换为html文件名称（全路径）
-   * @throws Exception
-   */
+  private static final Logger log = Logger.getLogger(PptFactory.class);
+
   @Override
   public void convert2Html(String inputFile, String outputFile) throws Exception {
-    log.info("将word转换为html文件开始,输出文件 [" + outputFile + ".html]......");
+    log.info("将PPT或PPTX转换为html文件开始,输出文件 [" + outputFile + ".html]......");
     long startTime = System.currentTimeMillis();
-    AbstractHtml html = new WordHtml();
+    AbstractHtml html = new PptHtml();
     html.createHtml(inputFile, outputFile);
-    log.info("将word转换为html文件......ok");
+    log.info("将PPT或PPTX转换为html文件......ok");
     log.info("Generate " + outputFile + ".html with " + (System.currentTimeMillis() - startTime)
         + " ms.");
   }
 
   @Override
   public void convert2Png(String fileName, String outPutFile) throws Exception {
-    log.info("start convert Word to png,out file [" + outPutFile + ".png]......");
+    log.info("start convert PPT to png,out file [" + outPutFile + ".html]......");
     long startTime = System.currentTimeMillis();
-    AbstractPng png = new WordPng();
+    AbstractPng png = new PptPng();
     png.createPng(fileName, outPutFile);
-    log.info("将Word转换为png文件......ok");
+    log.info("将PPT转换为png文件......ok");
     log.info("convert success! Generate " + outPutFile + " with "
         + (System.currentTimeMillis() - startTime) + " ms.");
   }
 
   @Override
   public void convert2Text(String fileName, String outPutFile) throws Exception {
-    log.info("start convert Word to txt,out file [" + outPutFile + ".txt]......");
+    log.info("start convert PPT to txt,out file [" + outPutFile + ".html]......");
     long startTime = System.currentTimeMillis();
-    AbstractText text = new WordText();
+    AbstractText text = new PptText();
     text.createTxt(fileName, outPutFile);
-    log.info("将Word转换为Word文件......ok");
-    log.info("convert success! Generate " + outPutFile + ".Word with "
+    log.info("将PPT转换为txt文件......ok");
+    log.info("convert success! Generate " + outPutFile + ".txt with "
         + (System.currentTimeMillis() - startTime) + " ms.");
   }
 
   @Override
   public boolean convert2Pdf(String fileName, String outPutFile) throws Exception {
-    log.info("start convert Word to pdf,out file [" + outPutFile + ".pdf]......");
+    log.info("start convert PPT to pdf,out file [" + outPutFile + ".html]......");
     long startTime = System.currentTimeMillis();
-    AbstractPdf html = new WordPdf();
+    AbstractPdf html = new PptPdf();
     html.createPdf(fileName, outPutFile);
-    log.info("将Word转换为pdf文件......ok");
+    log.info("将PPT转换为pdf文件......ok");
     log.info("convert success! Generate " + outPutFile + ".pdf with "
         + (System.currentTimeMillis() - startTime) + " ms.");
     return false;
   }
 
 }
-

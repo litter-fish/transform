@@ -5,13 +5,14 @@ import com.fish.fileparser.utils.ImageUtils;
 
 import org.apache.commons.io.FilenameUtils;
 
-public class PdfHtml implements AbstractHtml {
+public class PptHtml implements AbstractHtml {
 
   @Override
   public void createHtml(String inputFile, String outputFile) throws Exception {
     String baseName = FilenameUtils.getBaseName(inputFile);
-    int size = ImageUtils.convertPdf2Png(inputFile, outputFile);
+    int size = ImageUtils.convertPpt2Png(inputFile, outputFile);
     FileHelper.writeHtmlFile(size, outputFile, baseName);
+    FileHelper.parseH2(outputFile + ".html");
   }
 
 }
