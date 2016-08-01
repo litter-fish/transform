@@ -126,8 +126,6 @@ public class WordHtml implements AbstractHtml {
         }
       }
       // #end save pictures
-      Document htmlDocument = wordToHtmlConverter.getDocument();
-      DOMSource domSource = new DOMSource(htmlDocument);
       out = new ByteArrayOutputStream();
       streamResult = new StreamResult(out);
 
@@ -138,6 +136,8 @@ public class WordHtml implements AbstractHtml {
       serializer.setOutputProperty(OutputKeys.INDENT, "yes"); // indent 指定了当输出结果树时，Transformer
                                                               // 是否可以添加额外的空白；其值必须为 yes 或 no
       serializer.setOutputProperty(OutputKeys.METHOD, "html"); // 指定输出文件的后缀名
+      Document htmlDocument = wordToHtmlConverter.getDocument();
+      DOMSource domSource = new DOMSource(htmlDocument);
       serializer.transform(domSource, streamResult);
       String content = new String(out.toByteArray());
       FileHelper.writeFile(content, outPutFile + ".html");
