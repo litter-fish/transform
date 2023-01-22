@@ -145,7 +145,8 @@ public class ItextUtils {
       throws BadElementException, MalformedURLException, IOException, DocumentException {
     Image img = Image.getInstance(inputFile);
     // document.setPageSize(new Rectangle(img.getWidth() + 20, img.getHeight() + 20));
-    if (!document.isOpen()) {
+    boolean opened = document.isOpen();
+    if (!opened) {
       document.open();
     }
     float width = document.getPageSize().getWidth();
@@ -179,6 +180,9 @@ public class ItextUtils {
     img.setAlignment(Image.ALIGN_MIDDLE);
     // img.setRotationDegrees(-30);//旋转
     document.add(img);
+    if (!opened) {
+      document.close();
+    }
   }
 
   public static Font setFont() throws DocumentException, IOException {
